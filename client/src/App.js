@@ -5,11 +5,14 @@ import {
   Switch
 } from 'react-router-dom';
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 import axios from 'axios';
+import './styles/global.css';
+
 
 import Header from './Components/Header';
 import Courses from './Components/Courses';
+import CourseDetail from './Components/CourseDetail';
 
 
 
@@ -17,32 +20,22 @@ import Courses from './Components/Courses';
 // tarst
 
 function App() {
-  const [data, setData] = useState('');
-
-  useEffect(() => {
-    console.log('useEffect called!');
-    axios(`http://localhost:5000/api/courses`)
-    .then(response => setData(response.data.data))
-    .then(console.log(data)) 
-    .catch(error => console.log('Error fetching and parsing data', error))
-}, []);
-
-
-  
+  // const [data, setData] = useState('');
   return (
     <BrowserRouter>
-    <div className="container">
+    {/* <div className="container"> */}
       <Header />
-      <Courses />
+
       <Switch>
-        {/* <Route exact path="/" component={Home} />
-        <Route path="/about" render={ () => <About title='About' /> } />
-        <Route exact path="/teachers" component={Teachers} />
-        <Route path="/teachers/:topic/:name" component={Featured} /> */}
-        <Route path="/courses"/>
+        <Route path="/courses" render={ () => <Courses /> } />
+        {/* <Route exact path="/" component={Home} /> */}
+        {/* <Route path="/about" render={ () => <About title='About' /> } /> */}
+        {/* <Route exact path="/teachers" component={Teachers} /> */}
+        <Route path="/course/:id" render={ () => <CourseDetail/> }  /> 
+        {/* <Route path="/courses"/> */}
         {/* <Route component={NotFound} /> */}
       </Switch>
-    </div>
+    {/* </div> */}
   </BrowserRouter>
   )
       }
