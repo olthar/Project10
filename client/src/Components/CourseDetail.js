@@ -9,10 +9,10 @@ const CourseDetail = (match) => {
     const [course, setCourse] = useState('');
 
     let routerContext = useContext(__RouterContext)
-    console.log(course.user)
+    console.log(course.materialsNeeded)
     let id = routerContext.match.params.id
-    let owner = course.owner
-    console.log(owner)
+    let material = course.materialsNeeded
+    // console.log(owner)
 
     useEffect(() => {
         console.log('useEffect called!');
@@ -20,6 +20,8 @@ const CourseDetail = (match) => {
         .then(response => setCourse(response.data))
         .catch(error => console.log('Error fetching and parsing data', error))
     }, []);
+
+    const materials = material.replace(/(\*)/ , '<li>')
 
 return(
     <div className="bounds course--detail">
@@ -40,18 +42,7 @@ return(
                     </li>
                     <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <ul>
-                        <li>1/2 x 3/4 inch parting strip</li>
-                        <li>1 x 2 common pine</li>
-                        <li>1 x 4 common pine</li>
-                        <li>1 x 10 common pine</li>
-                        <li>1/4 inch thick lauan plywood</li>
-                        <li>Finishing Nails</li>
-                        <li>Sandpaper</li>
-                        <li>Wood Glue</li>
-                        <li>Wood Filler</li>
-                        <li>Minwax Oil Based Polyurethane</li>
-                    </ul>
+                    <ul>{materials}</ul>
                     </li>
                 </ul>
             </div> 
