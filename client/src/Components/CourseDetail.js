@@ -7,21 +7,25 @@ import axios from 'axios';
 const CourseDetail = (match) => {
     
     const [course, setCourse] = useState('');
+    const [owner, setOwner] = useState('');
 
     let routerContext = useContext(__RouterContext)
     console.log(course.materialsNeeded)
     let id = routerContext.match.params.id
-    let material = course.materialsNeeded
-    // console.log(owner)
+    let material = course.materialsNeeded;
+    console.log(owner.firstName)
 
     useEffect(() => {
         console.log('useEffect called!');
         axios(`http://localhost:5000/api/courses/${id}`)
-        .then(response => setCourse(response.data))
+        .then(response => {
+            setCourse(response.data)
+            setOwner(response.data.owner)
+        })
         .catch(error => console.log('Error fetching and parsing data', error))
     }, []);
 
-    const materials = material.replace(/(\*)/ , '<li>')
+    // const materials = material.replace(/(\*)/ , '<li>')
 
 return(
     <div className="bounds course--detail">
@@ -42,7 +46,7 @@ return(
                     </li>
                     <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <ul>{materials}</ul>
+                    <ul>{material}</ul>
                     </li>
                 </ul>
             </div> 
