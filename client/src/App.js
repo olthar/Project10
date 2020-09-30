@@ -15,11 +15,11 @@ import './styles/global.css';
 
 
 import Header from './Components/Header';
-import NotFound from './components/NotFound';
-import UserSignUp from './components/UserSignUp';
-import UserSignIn from './components/UserSignIn';
-import UserSignOut from './components/UserSignOut';
-import Authenticated from './components/Authenticated';
+import NotFound from './Components/NotFound';
+import UserSignUp from './Components/UserSignUp';
+import UserSignIn from './Components/UserSignIn';
+import UserSignOut from './Components/UserSignOut';
+import Authenticated from './Components/Authenticated';
 import Courses from './Components/Courses';
 import CourseDetail from './Components/CourseDetail';
 
@@ -42,7 +42,7 @@ function App() {
   return (
     <BrowserRouter>
     {/* <div className="container"> */}
-      <Header />
+    <HeaderWithContext />
 
       <Switch>
         {/* <Route path="/courses" render={ () => <Courses /> } /> */}
@@ -56,7 +56,7 @@ function App() {
         {/* <Route exact path="/teachers" component={Teachers} /> */}
         <Route path="/course/:id" render={ () => <CourseDetail/> }  /> 
         {/* <Route path="/courses"/> */}
-        {/* <Route component={NotFound} /> */}
+        <Route component={NotFound} />
       </Switch>
     {/* </div> */}
   </BrowserRouter>

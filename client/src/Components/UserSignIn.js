@@ -33,7 +33,7 @@ export default class UserSignIn extends Component {
                   type="text"
                   value={username} 
                   onChange={this.change} 
-                  placeholder="User Name" />
+                  placeholder="Email Name" />
                 <input 
                   id="password" 
                   name="password"
@@ -71,14 +71,18 @@ export default class UserSignIn extends Component {
       .then((user) => {
         if (user === null) {
           this.setState(() => {
+            console.log(1)
             return { errors: [ 'Sign-in was unsuccessful' ] };
+            
           });
         } else {
+          console.log(user)
           this.props.history.push(from);
         }
       })
       .catch((error) => {
         console.error(error);
+        console.log(3)
         this.props.history.push('/error');
       });
   }

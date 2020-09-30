@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Route, NavLink, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
+
 import Course from './Course';
 
 
@@ -19,7 +20,7 @@ function Courses  () {
         // .then (console.log(courses)) 
         .catch(error => console.log('Error fetching and parsing data', error))
     }, []);
-
+    
     console.log(courses)
     if (courses.length) {
         courseList = courses.map(course => <Course data={course} key={course.id} />);  

@@ -1,16 +1,29 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const Header = () => (
-  <div className="header">
-    <div className="bounds">
-      <h1 className="header--logo">Courses</h1>
-        <nav>
-            <NavLink className="signup" to={`sign-up.html`}>Sign Up</NavLink>
-            <NavLink className="signin" to={`sign-in.html`}>Sign In</NavLink>
-        </nav>
-    </div>
-  </div>
-);
-
-export default Header;
+export default class Header extends React.PureComponent {
+  render() {
+    const { context } = this.props;
+    const authUser = context.authenticatedUser;
+    return (
+      <div className="header">
+        <div className="bounds">
+          <h1 className="header--logo">MyAuth</h1>
+          <nav>
+            {authUser ? (
+              <React.Fragment>
+                <span>Welcome, {authUser.firstName}!</span>
+                <Link to="/signout">Sign Out</Link>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Link className="signup" to="/signup">Sign Up</Link>
+                <Link className="signin" to="/signin">Sign In</Link>
+              </React.Fragment>
+            )}
+          </nav>
+        </div>
+      </div>
+    );
+  }
+};
