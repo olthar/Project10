@@ -1,45 +1,67 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
+import { NewContext } from '../ContextIndex';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 
-export default class UserSignIn extends Component {
-  state = {
-    username: '',
-    password: '',
-    errors: [],
-  }
+const UserSignIn = (props) => {
+    const { actions } = useContext(NewContext);
+    const [user, setUser] = useState({
+      emailAddress:'',
+      password:'',
+      errors:[]
+    });
 
-  render() {
-    const {
-      username,
-      password,
-      errors,
-    } = this.state;
+    const change = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setUser({ ...user, ...{ [name]: value } });
+      }
 
-    return (
-      <div className="bounds">
+    const submit = () => {
+        const { from } = props.location.state || { from: { pathname: '/authenticated' } };
+        actions.signIn(user.emailAddress, user.password)
+          .then((user) => {
+            if (user === null) {
+              setUser({ ...user, ...{errors: [ 'Sign-in was unsuccessful' ] }});
+              } else {
+              console.log(user)
+              props.history.push(from);
+            }
+          })
+          .catch((error) => {
+            props.history.push('/error');
+          });
+      }
+    
+
+    const cancel = () => {
+        props.history.push('/');
+    }
+
+    return(
+        <div className="bounds">
         <div className="grid-33 centered signin">
           <h1>Sign In</h1>
           <Form 
-            cancel={this.cancel}
-            errors={errors}
-            submit={this.submit}
+            cancel={cancel}
+            errors={user.errors}
+            submit={submit}
             submitButtonText="Sign In"
             elements={() => (
               <React.Fragment>
                 <input 
-                  id="username" 
-                  name="username" 
+                  id="emailAddress" 
+                  name="emailAddress" 
                   type="text"
-                  value={username} 
-                  onChange={this.change} 
-                  placeholder="Email Name" />
+                  value={user.emailAddress} 
+                  onChange={change} 
+                  placeholder="Email Address" />
                 <input 
                   id="password" 
                   name="password"
                   type="password"
-                  value={password} 
-                  onChange={this.change} 
+                  value={user.password} 
+                  onChange={change} 
                   placeholder="Password" />                
               </React.Fragment>
             )} />
@@ -51,43 +73,4 @@ export default class UserSignIn extends Component {
     );
   }
 
-  change = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-
-    this.setState(() => {
-      return {
-        [name]: value
-      };
-    });
-  }
-
-  submit = () => {
-    const { context } = this.props;
-    const { from } = this.props.location.state || { from: { pathname: '/authenticated' } };
-    const { username, password } = this.state;
-
-    context.actions.signIn(username, password)
-      .then((user) => {
-        if (user === null) {
-          this.setState(() => {
-            console.log(1)
-            return { errors: [ 'Sign-in was unsuccessful' ] };
-            
-          });
-        } else {
-          console.log(user)
-          this.props.history.push(from);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        console.log(3)
-        this.props.history.push('/error');
-      });
-  }
-
-  cancel = () => {
-    this.props.history.push('/');
-  }
-}
+export default UserSignIn;

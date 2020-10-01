@@ -46,7 +46,8 @@ router.post('/',[
     .withMessage('Please provide a "password" with your POST request'),
 ],
  asyncHandler(async (req, res) => {
-    const errors = validationResult(req);
+  console.log(req.body)  
+  const errors = validationResult(req);
     //validation error handling
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map(error => error.msg);

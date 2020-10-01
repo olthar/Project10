@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './styles/global.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Provider } from './Context';
-import './styles/global.css';
+// import { Provider } from './Context';
+import { Provider } from './ContextIndex';
+
+
 
 
 ReactDOM.render(

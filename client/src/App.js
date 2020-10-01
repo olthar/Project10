@@ -7,7 +7,6 @@ import {
 import logo from './logo.svg';
 // import './App.css';
 import axios from 'axios';
-import './styles/global.css';
 
 
 
@@ -26,11 +25,11 @@ import CourseDetail from './Components/CourseDetail';
 import withContext from './Context';
 import PrivateRoute from './PrivateRoute';
 
-const HeaderWithContext = withContext(Header);
-const AuthWithContext = withContext(Authenticated);
-const UserSignUpWithContext = withContext(UserSignUp);
-const UserSignInWithContext = withContext(UserSignIn);
-const UserSignOutWithContext = withContext(UserSignOut);
+// const HeaderWithContext = withContext(Header);
+// const AuthWithContext = withContext(Authenticated);
+// const UserSignUpWithContext = withContext(UserSignUp);
+// const UserSignInWithContext = withContext(UserSignIn);
+// const UserSignOutWithContext = withContext(UserSignOut);
 
 
 
@@ -42,20 +41,22 @@ function App() {
   return (
     <BrowserRouter>
     {/* <div className="container"> */}
-    <HeaderWithContext />
+    <Header />
 
       <Switch>
         {/* <Route path="/courses" render={ () => <Courses /> } /> */}
         <Route exact path="/" component={Courses} />
-        <PrivateRoute path="/authenticated" component={AuthWithContext} />
-        <Route path="/signin" component={UserSignInWithContext} />
-        <Route path="/signup" component={UserSignUpWithContext} />
-        <Route path="/signout" component={UserSignOutWithContext} />
+        {/* <PrivateRoute path="/authenticated" component={AuthWithContext} /> */}
+        <Route path="/signin" component={UserSignIn} />
+        <Route path="/signup" component={UserSignUp} /> 
+        <Route path="/signout" component={UserSignOut} /> 
         {/* <Route exact path="/" component={Home} /> */}
         {/* <Route path="/about" render={ () => <About title='About' /> } /> */}
         {/* <Route exact path="/teachers" component={Teachers} /> */}
-        <Route path="/course/:id" render={ () => <CourseDetail/> }  /> 
+        <Route path="/course/:id" component={CourseDetail}   /> 
         {/* <Route path="/courses"/> */}
+        
+
         <Route component={NotFound} />
       </Switch>
     {/* </div> */}

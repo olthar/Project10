@@ -368,14 +368,14 @@ p {
   font-family: "Cousine";
   font-size: 14px;
   font-weight: 100;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(240, 240, 0, 0.5);
   margin-bottom: 10px;
   font-weight: normal;
 }
 /* line 123, ../sass/global.sass */
 .course--title {
   font-size: 18px;
-  color: #fff;
+  color: rgb(225, 15, 15);
 }
 /* line 126, ../sass/global.sass */
 .course--link {

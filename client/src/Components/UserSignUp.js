@@ -1,33 +1,55 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
+import { NewContext } from '../ContextIndex';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 
-export default class UserSignUp extends Component {
-  state = {
-    firstName: '',
-    lastName: '',
-    emailAddress: '',
-    password: '',
-    errors: [],
-  }
+const UserSignUp = (props) => {
+    const { data, actions } = useContext(NewContext);
 
-  render() {
-    const {
-      firstName,
-      lastName,
-      emailAddress,
-      password,
-      errors,
-    } = this.state;
+    const [user, setUser] = useState({
+      firstName:'',
+      lastName:'',
+      emailAddress:'',
+      password:'',
+      errors:[]
+    });
 
-    return (
-      <div className="bounds">
+    const change = (event) => {
+      const name = event.target.name;
+      const value = event.target.value;
+      setUser({ ...user, ...{ [name]: value } });
+    }
+
+    const submit = () => {
+      data.createUser(user)
+      .then( errors => {
+        if (errors.length) {
+          setUser({ ...user, ...{errors}});
+        } else {
+          actions.signIn(user.emailAddress, user.password)
+            .then(() => {
+              props.history.push('/authenticated');    
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        props.history.push('/error');
+      });
+    }
+
+    const cancel = () => {
+        props.history.push('/');
+    }
+
+    return(
+        <div className="bounds">
         <div className="grid-33 centered signin">
-          <h1>Sign Up</h1>
+        <h1>Sign Up</h1>
           <Form 
-            cancel={this.cancel}
-            errors={errors}
-            submit={this.submit}
+            cancel={cancel}
+            errors={user.errors}
+            submit={submit}
             submitButtonText="Sign Up"
             elements={() => (
               <React.Fragment>
@@ -35,30 +57,30 @@ export default class UserSignUp extends Component {
                   id="firstName" 
                   name="firstName" 
                   type="text"
-                  value={firstName} 
-                  onChange={this.change} 
+                  value={user.firstName} 
+                  onChange={change} 
                   placeholder="First Name" />
                 <input 
                   id="lastName" 
                   name="lastName" 
                   type="text"
-                  value={lastName} 
-                  onChange={this.change} 
+                  value={user.lastName} 
+                  onChange={change} 
                   placeholder="Last Name" />
                 <input 
                   id="emailAddress" 
                   name="emailAddress" 
                   type="text"
-                  value={emailAddress} 
-                  onChange={this.change} 
+                  value={user.emailAddress} 
+                  onChange={change} 
                   placeholder="Email Address" />
                 <input 
                   id="password" 
                   name="password"
                   type="password"
-                  value={password} 
-                  onChange={this.change} 
-                  placeholder="Password" />
+                  value={user.password} 
+                  onChange={change} 
+                  placeholder="Password" />                
               </React.Fragment>
             )} />
           <p>
@@ -69,53 +91,4 @@ export default class UserSignUp extends Component {
     );
   }
 
-  change = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-
-    this.setState(() => {
-      return {
-        [name]: value
-      };
-    });
-  }
-
-  submit = () => {
-    const { context } = this.props;
-    const {
-      firstName,
-      lastName,
-      emailAddress,
-      password,
-    } = this.state;
-
-    // Create user
-    const user = {
-      firstName,
-      lastName,
-      emailAddress,
-      password,
-    };
-
-    context.data.createUser(user)
-      .then( errors => {
-        if (errors.length) {
-          this.setState({ errors });
-        } else {
-          context.actions.signIn(emailAddress, password)
-            .then(() => {
-              this.props.history.push('/authenticated');    
-            });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        this.props.history.push('/error');
-      });
-  
-  }
-
-  cancel = () => {
-   this.props.history.push('/');
-  }
-}
+export default UserSignUp;

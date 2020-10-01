@@ -55,7 +55,8 @@ app.use((err, req, res, next) => {
     const errors = err.errors.map(error => error.message);
     res.status(400).json(errors);   
   } else {
-      res.status(err.status || 500).json({
+    console.log(err)  
+    res.status(err.status || 500).json({
         message: err.message,
         name: err.name,
         error: {},
