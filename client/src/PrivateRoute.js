@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { NewContext } from './ContextIndex';
+
 import { Route, Redirect } from 'react-router-dom';
 import { Consumer } from './Context';
 
 export default ({ component: Component, ...rest }) => {
+  const { authenticatedUser } = useContext(NewContext);
+
   return (
-    <Consumer>
-      {context => (
         <Route
           {...rest}
-          render={props => context.authenticatedUser ? (
+          render={props => authenticatedUser ? (
               <Component {...props} />
             ) : (
               <Redirect to={{
@@ -18,7 +20,5 @@ export default ({ component: Component, ...rest }) => {
             )
           }
         />
-    )}
-    </Consumer>
   );
 };

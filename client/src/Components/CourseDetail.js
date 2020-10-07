@@ -9,7 +9,7 @@ const CourseDetail = (props) => {
     const [course, setCourse] = useState('');
     const [owner, setOwner] = useState('');
 
-    console.log(course.materialsNeeded)
+    console.log(owner.firstName)
     // let material = course.materialsNeeded;
     // console.log(course.owner.firstName)
     // console.log(id)
@@ -19,7 +19,7 @@ const CourseDetail = (props) => {
         console.log('useEffect called!');
         data.getCourse(id)
         .then(response => {
-            // console.log(response);
+            setOwner(response.owner);
             setCourse(response)
             // setOwner(response.data.owner)
         })
@@ -37,8 +37,8 @@ return(
         <div className="bounds course--detail">
             <div className="grid-66">
                 <h4 className="course--label">Course</h4>
-                <h3 className="course--title">`{course.title}`</h3>
-                <p>`By { course.title }`</p>
+                <h3 className="course--title">{course.title}</h3>
+                <p>By { owner.firstName } { owner.lastName }</p>
             </div> 
             <div className="course--description">
                 <p>{ course.description }</p>

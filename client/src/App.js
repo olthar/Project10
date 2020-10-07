@@ -6,11 +6,6 @@ import {
 } from 'react-router-dom';
 import logo from './logo.svg';
 // import './App.css';
-import axios from 'axios';
-
-
-
-
 
 
 import Header from './Components/Header';
@@ -21,6 +16,8 @@ import UserSignOut from './Components/UserSignOut';
 import Authenticated from './Components/Authenticated';
 import Courses from './Components/Courses';
 import CourseDetail from './Components/CourseDetail';
+import CreateCourse from './Components/CreateCourse';
+
 
 import withContext from './Context';
 import PrivateRoute from './PrivateRoute';
@@ -50,6 +47,9 @@ function App() {
         <Route path="/signin" component={UserSignIn} />
         <Route path="/signup" component={UserSignUp} /> 
         <Route path="/signout" component={UserSignOut} /> 
+        <PrivateRoute path="/authenticated" component={Authenticated} /> 
+
+        <Route path="/create-course" component={CreateCourse} /> 
         {/* <Route exact path="/" component={Home} /> */}
         {/* <Route path="/about" render={ () => <About title='About' /> } /> */}
         {/* <Route exact path="/teachers" component={Teachers} /> */}
