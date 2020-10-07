@@ -24,8 +24,8 @@ const CreateCourse = (props) => {
         if (completedCourse === null) {
           setCourse({ ...course, ...{errors: [ 'Create course was unsuccessful' ] }});
           } else {
-          console.log(completedCourse)
-          // props.history.push(from);
+          // console.log(completedCourse)
+          props.history.push(from);
         }
       })
       .catch((error) => {
