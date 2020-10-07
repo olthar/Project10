@@ -6,7 +6,7 @@ export const NewContext = React.createContext();
 
 export const Provider = (props) => {
   const [authenticatedUser, setauthenticatedUser] = useState(Cookies.getJSON('authenticatedUser') || "")
-  const [credentials, setCredentials] = useState(Cookies.getJSON('encodedCredentials') || "")
+  const [credentials, setCredentials] = useState(Cookies.getJSON('credentials') || "")
 
 
   const data = new Data()

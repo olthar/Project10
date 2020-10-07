@@ -7,26 +7,25 @@ import Form from './Form';
 const CreateCourse = (props) => {
     const { authenticatedUser, credentials, data } = useContext(NewContext);
 
-    const [course, setUser] = useState({
+    const [course, setCourse] = useState({
         title:'',
         description:'',
         estimatedTime:'',
         materialsNeeded: '',
-        userId:'',
+        userId: authenticatedUser.id,
         errors:[]
       });
     
-    console.log(authenticatedUser)
-
   const submit = () => {
     const { from } = props.location.state || { from: { pathname: '/authenticated' } };
+    console.log(course)
     data.createCourse(course, credentials)
-      .then((course) => {
-        if (course === null) {
-          setUser({ ...course, ...{errors: [ 'Create course was unsuccessful' ] }});
+      .then((completedCourse) => {
+        if (completedCourse === null) {
+          setCourse({ ...course, ...{errors: [ 'Create course was unsuccessful' ] }});
           } else {
-          console.log(course)
-          props.history.push(from);
+          console.log(completedCourse)
+          // props.history.push(from);
         }
       })
       .catch((error) => {
@@ -37,7 +36,7 @@ const CreateCourse = (props) => {
   const change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setUser({ ...course, ...{ [name]: value } });
+    setCourse({ ...course, ...{ [name]: value } });
   }
   const cancel = () => {
     props.history.push('/');
@@ -47,15 +46,6 @@ const CreateCourse = (props) => {
     <div className="bounds course--detail">
         <h1>Create Course</h1>
         <div>
-          <div>
-            <h2 className="validation--errors--label">Validation errors</h2>
-            <div className="validation-errors">
-              <ul>
-                <li>Please provide a value for "Title"</li>
-                <li>Please provide a value for "Description"</li>
-              </ul>
-            </div>
-          </div>
           <Form 
             cancel={cancel}
             errors={course.errors}
@@ -99,8 +89,7 @@ const CreateCourse = (props) => {
                 </div>
             </React.Fragment>
             )}/>
-            <div className="grid-100 pad-bottom"><button className="button" type="submit">Create Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
-            </div>
+
         </div>
       </div>
   )

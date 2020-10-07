@@ -9,7 +9,7 @@ const CourseDetail = (props) => {
     const [course, setCourse] = useState('');
     const [owner, setOwner] = useState('');
 
-    console.log(owner.firstName)
+    console.log(owner)
     // let material = course.materialsNeeded;
     // console.log(course.owner.firstName)
     // console.log(id)

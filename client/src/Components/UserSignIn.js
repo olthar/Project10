@@ -20,11 +20,11 @@ const UserSignIn = (props) => {
     const submit = () => {
         const { from } = props.location.state || { from: { pathname: '/authenticated' } };
         actions.signIn(user.emailAddress, user.password)
-          .then((user) => {
-            if (user === null) {
+          .then((response) => {
+            if (response === null) {
               setUser({ ...user, ...{errors: [ 'Sign-in was unsuccessful' ] }});
               } else {
-              console.log(user)
+              console.log(response)
               props.history.push(from);
             }
           })
