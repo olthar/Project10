@@ -53,7 +53,8 @@ app.use((err, req, res, next) => {
   }
   if (err.name === 'SequelizeValidationError') {
     const errors = err.errors.map(error => error.message);
-    res.status(400).json(errors);   
+    console.log({errors: errors})
+    res.status(400).json({errors: errors});   
   } else {
     console.log(err)  
     res.status(err.status || 500).json({

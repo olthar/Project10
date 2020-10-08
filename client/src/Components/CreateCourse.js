@@ -20,11 +20,11 @@ const CreateCourse = (props) => {
     const { from } = props.location.state || { from: { pathname: '/authenticated' } };
     console.log(course)
     data.createCourse(course, credentials)
-      .then((completedCourse) => {
-        if (completedCourse === null) {
-          setCourse({ ...course, ...{errors: [ 'Create course was unsuccessful' ] }});
+      .then((errors) => {
+        if (errors.length) {
+          console.log(errors)
+          setCourse({ ...course, ...{errors }});
           } else {
-          // console.log(completedCourse)
           props.history.push(from);
         }
       })
