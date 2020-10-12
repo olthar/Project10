@@ -4,7 +4,15 @@ import { NewContext } from '../ContextIndex';
 
 const Header = (props) => {
   const { authenticatedUser } = useContext(NewContext);
-  
+  // let welcome;
+
+  if (authenticatedUser){
+    console.log("user")
+  } else {
+    console.log("no user")
+  }
+  console.log(authenticatedUser)
+
   return (
     <div className="header">
       <div className="bounds">
@@ -26,7 +34,5 @@ const Header = (props) => {
     </div>
   );
 }
-
-
 
 export default Header;

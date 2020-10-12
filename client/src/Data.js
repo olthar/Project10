@@ -78,4 +78,36 @@ export default class Data {
       throw new Error();
     }
   }
+
+  async updateCourse(course, encodedCredentials, courseId) {
+    const response = await this.api(`/courses/${courseId}`, 'PUT' , course, true, encodedCredentials);
+    if (response.status === 204) {
+      return response
+      // response.json().then(data => data);
+    }
+    else if (response.status === 400) {
+      return response.json().then(data => {
+        return data.errors;
+      });
+    }
+    else {
+      throw new Error();
+    }
+  }
+
+  async deleteCourse(courseId, encodedCredentials) {
+    const response = await this.api(`/courses/${courseId}`, 'DELETE' , null, true, encodedCredentials);
+    if (response.status === 204) {
+      return response
+      // response.json().then(data => data);
+    }
+    else if (response.status === 403 || response.status === 404 ) {
+      return response.json().then(data => {
+        return data.errors;
+      });
+    }
+    else {
+      throw new Error();
+    }
+  }
 }

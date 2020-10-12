@@ -5,7 +5,7 @@ import Data from './Data';
 export const NewContext = React.createContext(); 
 
 export const Provider = (props) => {
-  const [authenticatedUser, setauthenticatedUser] = useState(Cookies.getJSON('authenticatedUser') || "")
+  const [authenticatedUser, setauthenticatedUser] = useState(Cookies.getJSON('authenticatedUser') || null)
   const [credentials, setCredentials] = useState(Cookies.getJSON('credentials') || "")
 
 
@@ -29,7 +29,7 @@ export const Provider = (props) => {
   }
 
   const signOut = () => {
-    setauthenticatedUser({ authenticatedUser: "" });
+    setauthenticatedUser({ authenticatedUser: null });
     setCredentials({});
     Cookies.remove('authenticatedUser');
     Cookies.remove('credentials');

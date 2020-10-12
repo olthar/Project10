@@ -1,37 +1,42 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { NewContext } from '../ContextIndex';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 
 const CourseDetail = (props) => {
-    const { data } = useContext(NewContext);
+    const { authenticatedUser, data } = useContext(NewContext);
 
     const [course, setCourse] = useState('');
     const [owner, setOwner] = useState('');
+    const [match, setMatch] = useState(false);
+    let buttons;
 
-    console.log(owner)
-    // let material = course.materialsNeeded;
-    // console.log(course.owner.firstName)
-    // console.log(id)
 
     useEffect(() => {
         let id = props.match.params.id
         console.log('useEffect called!');
         data.getCourse(id)
         .then(response => {
+            setCourse(response);
             setOwner(response.owner);
-            setCourse(response)
-            // setOwner(response.data.owner)
+            response.owner.id === authenticatedUser.id ? setMatch(true) : console.log("no")
         })
         .catch(error => console.log('Error fetching and parsing data', error))
     }, []);
+
+    if(match){
+        buttons = <span>
+            <NavLink to={`/courses/${course.id}/update`} className="button">Update Course</NavLink>
+            <NavLink to={`/courses/${course.id}/delete`} className="button">Delete Course</NavLink></span>
+    }
 
 return(
     <div>
         <div className="actions--bar">
           <div className="bounds">
-            <div className="grid-100"><span><a className="button" href="update-course.html">Update Course</a><a className="button" href="#">Delete Course</a></span><a
-                className="button button-secondary" href="index.html">Return to List</a></div>
+          <div className="grid-100">    
+              {buttons}
+            <a className="button button-secondary" href="/">Return to List</a></div>
           </div>
         </div>
         <div className="bounds course--detail">

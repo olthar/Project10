@@ -68,7 +68,7 @@ router.put('/:id', auth.authenticateUser , asyncHandler(async (req, res) => {
     }
       //Can only update course that belong to the user 
       if (req.currentUser.id === course.userId){
-          course.title = req.body.quote;
+          course.title = req.body.title;
           course.description = req.body.description;
           course.estimatedTime = req.body.estimatedTime;
           course.materialsNeeded = req.body.materialsNeeded;

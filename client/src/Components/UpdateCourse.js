@@ -6,28 +6,54 @@ import Form from './Form';
 
 const UpdateCourse = (props) => {
     const { authenticatedUser, credentials, data } = useContext(NewContext);
-
+    const [owner, setOwner] = useState('');
+    
     const [course, setCourse] = useState({
         title:'',
         description:'',
         estimatedTime:'',
         materialsNeeded: '',
-        userId: authenticatedUser.id,
+        userId: '',
+        authenticatedUserId: authenticatedUser.id,
+        courseId: '',
         errors:[]
       });
-    
+    const id = props.match.params.id
+      
+      useEffect(() => {
+        const { from } = props.location.state || { from: { pathname: '/authenticated' } };
+        console.log('useEffect called!');
+        data.getCourse(id)
+        .then(response => {
+            setOwner(response.owner);
+            setCourse({...course, 
+                title: response.title,
+                description: response.description,
+                estimatedTime: response.estimatedTime,
+                materialsNeeded: response.materialsNeeded,
+                userId: response.owner.id,
+                courseId: response.id,
+                errors:[]
+            });
+            //if a user navigates to the update page of a project they don't own, they are redirected to the details page
+            response.owner.id === authenticatedUser.id ? console.log("YESSS") : props.history.push(`/courses/${id}`)
+
+        })
+        .catch(error => console.log('Error fetching and parsing data', error))
+    }, []);
+
   const submit = () => {
     const { from } = props.location.state || { from: { pathname: '/authenticated' } };
-    console.log(course)
-    data.createCourse(course, credentials)
-      .then((completedCourse) => {
-        if (completedCourse === null) {
-          setCourse({ ...course, ...{errors: [ 'Create course was unsuccessful' ] }});
-          } else {
-          // console.log(completedCourse)
-          props.history.push(from);
-        }
-      })
+    console.log(course, credentials, course.courseId)
+    data.updateCourse(course, credentials, course.courseId)
+        .then((errors) => {
+            if (errors.length) {
+              console.log(errors)
+              setCourse({ ...course, ...{errors }});
+              } else {
+              props.history.push(from);
+            }
+          })
       .catch((error) => {
         props.history.push('/error');
       });
@@ -64,7 +90,7 @@ const UpdateCourse = (props) => {
                         className="input-title course--title--input" 
                         placeholder="Course title..."
                         value={course.title}
-                        onChange={change}  />
+                        onChange={change} />
                     </div>
                     <p>By {authenticatedUser.firstName} {authenticatedUser.lastName}</p>
                   </div>
@@ -93,8 +119,6 @@ const UpdateCourse = (props) => {
         </div>
       </div>
   )
-
-
 }
 
 export default UpdateCourse;
