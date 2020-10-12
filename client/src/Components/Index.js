@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Route, NavLink, Redirect } from 'react-router-dom';
-import { NewContext } from '../ContextIndex';
+import { NewContext } from '../Context';
 import Course from './Course';
 
 function Courses  () {

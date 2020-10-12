@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { NewContext } from './ContextIndex';
+import { NewContext } from './Context';
 
 import { Route, Redirect } from 'react-router-dom';
-import { Consumer } from './Context';
+
 
 export default ({ component: Component, ...rest }) => {
   const { authenticatedUser } = useContext(NewContext);

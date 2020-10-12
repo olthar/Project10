@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { NewContext } from '../ContextIndex';
+import { NewContext } from '../Context';
 
 const Header = (props) => {
   const { authenticatedUser } = useContext(NewContext);
@@ -11,7 +11,7 @@ const Header = (props) => {
   } else {
     console.log("no user")
   }
-  
+
   return (
     <div className="header">
       <div className="bounds">

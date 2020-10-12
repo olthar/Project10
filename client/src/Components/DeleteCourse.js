@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { NewContext } from '../ContextIndex';
+import { NewContext } from '../Context';
 import { NavLink } from 'react-router-dom';
 
 export default (props) => {

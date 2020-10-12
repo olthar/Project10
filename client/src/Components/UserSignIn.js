@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { NewContext } from '../ContextIndex';
+import { NewContext } from '../Context';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 

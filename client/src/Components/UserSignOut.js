@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { NewContext } from '../ContextIndex';
+import { NewContext } from '../Context';
 import { Redirect } from 'react-router-dom';
 
 const UserSignOut = (props) => {

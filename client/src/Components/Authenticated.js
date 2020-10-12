@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NewContext } from '../ContextIndex';
+import { NewContext } from '../Context';
 
 
 export default (props) => {
