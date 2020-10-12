@@ -11,12 +11,11 @@ const Header = (props) => {
   } else {
     console.log("no user")
   }
-  console.log(authenticatedUser)
-
+  
   return (
     <div className="header">
       <div className="bounds">
-        <h1 className="header--logo">Classes</h1>
+        <h1 className="header--logo">Courses</h1>
         <nav>
           {authenticatedUser ? (
             <React.Fragment>

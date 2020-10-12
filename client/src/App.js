@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  BrowserRouter,
+  BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom';
@@ -14,7 +14,7 @@ import UserSignUp from './Components/UserSignUp';
 import UserSignIn from './Components/UserSignIn';
 import UserSignOut from './Components/UserSignOut';
 import Authenticated from './Components/Authenticated';
-import Courses from './Components/Courses';
+import Index from './Components/Index';
 import CourseDetail from './Components/CourseDetail';
 import CreateCourse from './Components/CreateCourse';
 import UpdateCourse from './Components/UpdateCourse';
@@ -39,13 +39,13 @@ import PrivateRoute from './PrivateRoute';
 function App() {
   // const [data, setData] = useState('');
   return (
-    <BrowserRouter>
+    <Router>
     {/* <div className="container"> */}
     <Header />
 
       <Switch>
         {/* <Route path="/courses" render={ () => <Courses /> } /> */}
-        <Route exact path="/" component={Courses} />
+        <Route exact path="/" component={Index} />
         {/* <PrivateRoute path="/authenticated" component={AuthWithContext} /> */}
         <Route path="/signin" component={UserSignIn} />
         <Route path="/signup" component={UserSignUp} /> 
@@ -66,7 +66,7 @@ function App() {
         <Route component={NotFound} />
       </Switch>
     {/* </div> */}
-  </BrowserRouter>
+  </Router>
   )
       }
 
