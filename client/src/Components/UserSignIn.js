@@ -17,6 +17,7 @@ const UserSignIn = (props) => {
         setUser({ ...user, ...{ [name]: value } });
       }
 
+    //When user submits the data is sent through actions in context to verify, if user is verified, they are sent to the authenticated page. 
     const submit = () => {
         const { from } = props.location.state || { from: { pathname: '/authenticated' } };
         actions.signIn(user.emailAddress, user.password)
@@ -33,7 +34,6 @@ const UserSignIn = (props) => {
           });
       }
     
-
     const cancel = () => {
         props.history.push('/');
     }

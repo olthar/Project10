@@ -20,6 +20,7 @@ const UserSignUp = (props) => {
       setUser({ ...user, ...{ [name]: value } });
     }
 
+    // On clicking submit, the data is sent through context to the API. If validated, the user is sent to authenticated. 
     const submit = () => {
       data.createUser(user)
       .then( errors => {

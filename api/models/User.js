@@ -14,10 +14,10 @@ module.exports = (sequelize) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Please provide a "firstName" with your POST request',
+            msg: 'Please provide a "firstName" ',
           },
           notEmpty: {
-            msg: 'Please provide a "firstName" with your POST request',
+            msg: 'Please provide a "firstName" ',
           },
         },
     },
@@ -26,10 +26,10 @@ module.exports = (sequelize) => {
             allowNull: false,
             validate: {
               notNull: {
-                msg: 'Please provide a "lastName" with your POST request',
+                msg: 'Please provide a "lastName" ',
               },
               notEmpty: {
-                msg: 'Please provide a "lastName" with your POST request',
+                msg: 'Please provide a "lastName" ',
               },
             },
     },
@@ -38,10 +38,10 @@ module.exports = (sequelize) => {
             allowNull: false,
             validate: {
               notNull: {
-                msg: 'Please provide a valid "emailAddress" with your POST request',
+                msg: 'Please provide a valid "emailAddress" ',
               },
               notEmpty: {
-                msg: 'Please provide a valid "emailAddress" with your POST request',
+                msg: 'Please provide a valid "emailAddress" ',
               },
               //Check the email format is valid. 
               isEmail: {

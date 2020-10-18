@@ -48,7 +48,7 @@ router.get("/:id", asyncHandler(async (req, res) => {
   if(course) {
     res.status(200).json(course);
   }else{
-    res.status(404).json({message: "Course not found"});
+    res.status(404).json({errors: "Course not found"});
   }
 })); 
 
@@ -56,6 +56,7 @@ router.get("/:id", asyncHandler(async (req, res) => {
 router.post('/', auth.authenticateUser , asyncHandler(async (req, res) => {
   let course;
     course = await Course.create(req.body);
+    console.log(res)
     return res.status(201).location('/api/courses/' + course.id).end(); 
 }))
 

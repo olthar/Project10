@@ -5,8 +5,6 @@ import Form from './Form';
 
 const UpdateCourse = (props) => {
     const { authenticatedUser, credentials, data } = useContext(NewContext);
-    const [owner, setOwner] = useState('');
-    
     const [course, setCourse] = useState({
         title:'',
         description:'',
@@ -19,41 +17,51 @@ const UpdateCourse = (props) => {
       });
     const id = props.match.params.id
       
+     //When the page loads, the course is loaded into the boxes based on the ID in the URL
       useEffect(() => {
-        const { from } = props.location.state || { from: { pathname: '/authenticated' } };
         console.log('useEffect called!');
         data.getCourse(id)
         .then(response => {
-            setOwner(response.owner);
-            setCourse({...course, 
-                title: response.title,
-                description: response.description,
-                estimatedTime: response.estimatedTime,
-                materialsNeeded: response.materialsNeeded,
-                userId: response.owner.id,
-                courseId: response.id,
-                errors:[]
-            });
-            //if a user navigates to the update page of a project they don't own, they are redirected to the details page
-            response.owner.id === authenticatedUser.id ? console.log("YESSS") : props.history.push(`/courses/${id}`)
-
+            if(response === 404){
+                props.history.push(`/notfound`)
+            } else {
+                setCourse({...course, 
+                    title: response.title,
+                    description: response.description,
+                    estimatedTime: response.estimatedTime,
+                    materialsNeeded: response.materialsNeeded,
+                    userId: response.owner.id,
+                    courseId: response.id,
+                    errors:[]
+                });
+                //if a user navigates to the update page of a project they don't own, they are redirected to forbidden page
+                response.owner.id === authenticatedUser.id ? console.log("allowed") : props.history.push(`/forbidden`)
+            }
         })
-        .catch(error => console.log('Error fetching and parsing data', error))
+        .catch(error => props.history.push(`/error`))
     }, []);
 
+  //When submit is pressed, the new course is sent to the API through DATA component. If successful, the user is sent back to the courses index.  
   const submit = () => {
-    const { from } = props.location.state || { from: { pathname: '/authenticated' } };
-    console.log(course, credentials, course.courseId)
     data.updateCourse(course, credentials, course.courseId)
         .then((errors) => {
             if (errors.length) {
-              console.log(errors)
-              setCourse({ ...course, ...{errors }});
-              } else {
-              props.history.push(from);
+                console.log(errors)
+                //If user doesn't have access to the course you get directed to the forbidden page
+                if (errors === 403) {
+                    props.history.push('/forbidden');
+                    console.log("You do not have authorization to delete this course")
+                  // If no course is found, user is sent to NotFound. 
+                  } else if (errors === 404) {
+                    props.history.push('/notfound');
+                } else {
+                    setCourse({ ...course, ...{errors }});
+                }
+            } else {
+                props.history.push(`/`);
             }
-          })
-      .catch((error) => {
+        })
+        .catch((error) => {
         props.history.push('/error');
       });
     }    

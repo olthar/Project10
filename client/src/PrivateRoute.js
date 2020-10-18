@@ -3,7 +3,6 @@ import { NewContext } from './Context';
 
 import { Route, Redirect } from 'react-router-dom';
 
-
 export default ({ component: Component, ...rest }) => {
   const { authenticatedUser } = useContext(NewContext);
 

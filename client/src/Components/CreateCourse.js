@@ -1,12 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { NewContext } from '../Context';
-import { Link } from 'react-router-dom';
 import Form from './Form';
-
 
 const CreateCourse = (props) => {
     const { authenticatedUser, credentials, data } = useContext(NewContext);
-
     const [course, setCourse] = useState({
         title:'',
         description:'',
@@ -16,16 +13,16 @@ const CreateCourse = (props) => {
         errors:[]
       });
     
+  //When submit is pressed, the Course state is passed to DATA which uses this to create a course using credentials to verify user  
   const submit = () => {
-    const { from } = props.location.state || { from: { pathname: '/authenticated' } };
-    console.log(course)
     data.createCourse(course, credentials)
       .then((errors) => {
         if (errors.length) {
-          console.log(errors)
+          // Adds validation errors from the API to the page. 
           setCourse({ ...course, ...{errors }});
           } else {
-          props.history.push(from);
+          //If course create is sussesful, you will be redirected to the list of courses. 
+          props.history.push('/');
         }
       })
       .catch((error) => {
@@ -33,6 +30,7 @@ const CreateCourse = (props) => {
       });
     }    
 
+  //When change is pressed the course state is updated using the name and value to identify the object. 
   const change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -93,8 +91,6 @@ const CreateCourse = (props) => {
         </div>
       </div>
   )
-
-
 }
 
 export default CreateCourse;

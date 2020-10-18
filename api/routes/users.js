@@ -36,16 +36,16 @@ router.get('/', auth.authenticateUser, asyncHandler (async (req, res) => {
 router.post('/',[
   check('firstName')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a "firstName" with your POST request'),
+  .withMessage('Please provide a "firstName"'),
   check('lastName')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a "lastName" with your POST request'),
+  .withMessage('Please provide a "lastName"'),
   check('emailAddress')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a valid "emailAddress" with your POST request'),
+  .withMessage('Please provide a valid "emailAddress"'),
   check('password')
     .exists({ checkNull: true, checkFalsy: true })
-    .withMessage('Please provide a "password" with your POST request'),
+    .withMessage('Please provide a "password" '),
 ],
  asyncHandler(async (req, res) => {
   console.log(req.body)  

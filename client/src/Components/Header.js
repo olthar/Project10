@@ -4,18 +4,12 @@ import { NewContext } from '../Context';
 
 const Header = (props) => {
   const { authenticatedUser } = useContext(NewContext);
-  // let welcome;
-
-  if (authenticatedUser){
-    console.log("user")
-  } else {
-    console.log("no user")
-  }
 
   return (
     <div className="header">
       <div className="bounds">
-        <h1 className="header--logo">Courses</h1>
+        <Link to={'/'} className="header--logo">Courses</Link>
+
         <nav>
           {authenticatedUser ? (
             <React.Fragment>

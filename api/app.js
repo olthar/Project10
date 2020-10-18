@@ -21,7 +21,7 @@ const app = express();
 app.use(express.json());
 
 // Enable All CORS Requests
-app.use(cors())
+app.use(cors());
 
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));

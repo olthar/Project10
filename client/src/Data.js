@@ -69,8 +69,8 @@ export default class Data {
     if (response.status === 200) {
       return response.json().then(data => data);
     }
-    else if (response.status === 401) {
-      return null;
+    else if (response.status === 404) {
+      return response.status;
     }
     else {
       throw new Error();
@@ -79,6 +79,7 @@ export default class Data {
 
   async createCourse(course, encodedCredentials) {
     const response = await this.api(`/courses`, 'POST' , course, true, encodedCredentials);
+    console.log(response)
     if (response.status === 201) {
       return response
       // response.json().then(data => data);
@@ -95,7 +96,7 @@ export default class Data {
 
   async updateCourse(course, encodedCredentials, courseId) {
     const response = await this.api(`/courses/${courseId}`, 'PUT' , course, true, encodedCredentials);
-    if (response.status === 204) {
+    if (response.status === 204) { 
       return response
       // response.json().then(data => data);
     }
@@ -103,6 +104,9 @@ export default class Data {
       return response.json().then(data => {
         return data.errors;
       });
+    }
+    else if (response.status === 403 || response.status === 404 ) {
+      return response.status;
     }
     else {
       throw new Error();
@@ -116,9 +120,8 @@ export default class Data {
       // response.json().then(data => data);
     }
     else if (response.status === 403 || response.status === 404 ) {
-      return response.json().then(data => {
-        return data.errors;
-      });
+      return response.status
+     
     }
     else {
       throw new Error();
