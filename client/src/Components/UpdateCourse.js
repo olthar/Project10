@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { NewContext } from '../Context';
 import Form from './Form';
 
@@ -16,30 +16,34 @@ const UpdateCourse = (props) => {
         errors:[]
       });
     const id = props.match.params.id
+    
+    //callback set to add current course details to course state. 
+    const update = useCallback((oldCourse) => {
+      setCourse(prevState => ({...prevState, 
+        title: oldCourse.title,
+        description: oldCourse.description,
+        estimatedTime: oldCourse.estimatedTime,
+        materialsNeeded: oldCourse.materialsNeeded,
+        userId: oldCourse.owner.id,
+        courseId: oldCourse.id,
+        errors:[]
+      }));
+    },[]);
       
      //When the page loads, the course is loaded into the boxes based on the ID in the URL
       useEffect(() => {
-        console.log('useEffect called!');
         data.getCourse(id)
         .then(response => {
             if(response === 404){
                 props.history.push(`/notfound`)
             } else {
-                setCourse({...course, 
-                    title: response.title,
-                    description: response.description,
-                    estimatedTime: response.estimatedTime,
-                    materialsNeeded: response.materialsNeeded,
-                    userId: response.owner.id,
-                    courseId: response.id,
-                    errors:[]
-                });
+              update(response)
                 //if a user navigates to the update page of a project they don't own, they are redirected to forbidden page
-                response.owner.id === authenticatedUser.id ? console.log("allowed") : props.history.push(`/forbidden`)
+              if (response.owner.id !== authenticatedUser.id) {props.history.push(`/forbidden`)}
             }
         })
         .catch(error => props.history.push(`/error`))
-    }, []);
+    }, [authenticatedUser.id, data, id, props.history, update]);
 
   //When submit is pressed, the new course is sent to the API through DATA component. If successful, the user is sent back to the courses index.  
   const submit = () => {

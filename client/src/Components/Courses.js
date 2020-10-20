@@ -11,11 +11,10 @@ function Courses  (props) {
 
     // When page loads the courses data is receeived from the API
     useEffect(() => {
-        console.log('useEffect called!');
         data.getCourses()
             .then(response => setCourses(response))
             .catch(error => props.history.push('/error'))
-    }, []);
+    }, [data, props.history]);
     
     // If there are courses, they will be added to the list using the COURSE component. 
     if (courses.length) {

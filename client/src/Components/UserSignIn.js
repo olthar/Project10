@@ -25,7 +25,6 @@ const UserSignIn = (props) => {
             if (response === null) {
               setUser({ ...user, ...{errors: [ 'Sign-in was unsuccessful' ] }});
               } else {
-              console.log(response)
               props.history.push(from);
             }
           })

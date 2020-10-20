@@ -13,7 +13,6 @@ const CourseDetail = (props) => {
     // When page loads the course data is receeived from the API
     useEffect(() => {
         let id = props.match.params.id
-        console.log('useEffect called!');
         data.getCourse(id)
         .then(response => {
             // If no course is found, user is sent to NotFound. 
@@ -27,7 +26,7 @@ const CourseDetail = (props) => {
         .catch((err) => {
             props.history.push('/error')
         })
-    }, []);
+    }, [data, props.history, props.match.params]);
 
     //Buttons created to delete and update course if the logged in user is the owner of that course
     if(authenticatedUser && owner.id === authenticatedUser.id){
